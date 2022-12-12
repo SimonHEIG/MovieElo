@@ -21,7 +21,8 @@ async function getMoviesFromAPI() {
       name: nom,
       elo: movie.properties.Elo.number,
       img: movie.properties['IMG'].files[0].name.replace('/original/', '/w342/'),
-      cover: movie.cover.external.url
+      cover: movie.cover.external.url,
+      id: movie.id
     }
   })
   if (data.has_more) {

@@ -2,6 +2,7 @@
 import MovieVote from './MovieVote.vue'
 import { movies } from '../stores/movies';
 import { ref, watchEffect } from 'vue';
+import { usePatch } from '../composable/fetch.js'
 
 let movie1 = ref()
 let movie2 = ref()
@@ -21,12 +22,26 @@ function newDuel() {
 }
 
 
-function calculateNewElos(score1, score2) {
-
+async function calculateNewElos(score1, score2) {
     const movie1_expected_score = 1 / (1 + Math.pow(10, ((movie2.value.elo - movie1.value.elo) / 400)))
     const movie2_expected_score = 1 / (1 + Math.pow(10, ((movie1.value.elo - movie2.value.elo) / 400)))
     movie1.value.elo += 20 * (score1 - movie1_expected_score)
     movie2.value.elo += 20 * (score2 - movie2_expected_score)
+
+    usePatch({
+        url: import.meta.env.VITE_MOVIE_ELO_API_URL,
+        data: {
+            id: movie1.value.id,
+            elo: movie1.value.elo
+        }
+    });
+    usePatch({
+        url: import.meta.env.VITE_MOVIE_ELO_API_URL,
+        data: {
+            id: movie2.value.id,
+            elo: movie2.value.elo
+        }
+    });
 
     newDuel()
 }
@@ -59,5 +74,4 @@ newDuel()
     align-items: center;
     gap: 40px;
 }
-
 </style>
