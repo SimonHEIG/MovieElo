@@ -91,7 +91,7 @@ async function getMoviesFromAPI() {
       grades: {
         acting: movie.properties.Acting.number,
         perso: movie.properties['Appréciation perso.'].number,
-        elo: parseInt(movie.properties.Elo.number),
+        elo: Math.trunc(movie.properties.Elo.number),
         feeling: movie.properties['Feeling à la fin du film'].number,
         story: movie.properties.Histoire.number,
         music: movie.properties.Musique.number,
