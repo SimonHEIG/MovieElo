@@ -19,11 +19,7 @@ app.use('/', function (req, res, next) {
     next();
 });
 
-// app.listen(port, () => {
-//     console.log(`Example app listening on port ${port}`)
-// })
-
-// Route to fetch database data
+// Get all watched movies 
 app.get('/', async (req, res) => {
     const data = {
         page_size: 100,
@@ -74,7 +70,6 @@ app.patch('/', async (req, res) => {
             }
         })
     }
-    // { id: '_ro%7D', type: 'number', number: 1000 }
     axios.request(options)
         .then(function (response) {
             console.log(response.data.properties.Elo.number);

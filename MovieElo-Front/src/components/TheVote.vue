@@ -8,7 +8,7 @@ let movie1 = ref()
 let movie2 = ref()
 
 watchEffect(() => {
-    if (movies.value[0].name != 'loading') {
+    if (movies.value[0].properties.name != 'loading') {
         newDuel()
     }
 })
@@ -17,29 +17,29 @@ function newDuel() {
     let shuffled = [...movies.value].sort(() => 0.5 - Math.random())
     shuffled = shuffled.slice(0, 2)
 
-    movie1.value = movies.value.find((movie) => movie.name == shuffled[0].name)
-    movie2.value = movies.value.find((movie) => movie.name == shuffled[1].name)
+    movie1.value = movies.value.find((movie) => movie.properties.name == shuffled[0].properties.name)
+    movie2.value = movies.value.find((movie) => movie.properties.name == shuffled[1].properties.name)
 }
 
 
 async function calculateNewElos(score1, score2) {
-    const movie1_expected_score = 1 / (1 + Math.pow(10, ((movie2.value.elo - movie1.value.elo) / 400)))
-    const movie2_expected_score = 1 / (1 + Math.pow(10, ((movie1.value.elo - movie2.value.elo) / 400)))
-    movie1.value.elo += 20 * (score1 - movie1_expected_score)
-    movie2.value.elo += 20 * (score2 - movie2_expected_score)
+    const movie1_expected_score = 1 / (1 + Math.pow(10, ((movie2.value.grades.elo - movie1.value.grades.elo) / 400)))
+    const movie2_expected_score = 1 / (1 + Math.pow(10, ((movie1.value.grades.elo - movie2.value.grades.elo) / 400)))
+    movie1.value.grades.elo += 20 * (score1 - movie1_expected_score)
+    movie2.value.grades.elo += 20 * (score2 - movie2_expected_score)
 
     usePatch({
         url: import.meta.env.VITE_MOVIE_ELO_API_URL,
         data: {
-            id: movie1.value.id,
-            elo: movie1.value.elo
+            id: movie1.value.properties.id,
+            elo: movie1.value.grades.elo
         }
     });
     usePatch({
         url: import.meta.env.VITE_MOVIE_ELO_API_URL,
         data: {
-            id: movie2.value.id,
-            elo: movie2.value.elo
+            id: movie2.value.properties.id,
+            elo: movie2.value.grades.elo
         }
     });
 
@@ -53,14 +53,14 @@ newDuel()
     <h2>The vote</h2>
     <div class="cards">
         <MovieVote
-            :name="movie1.name"
-            :img="movie1.img"
+            :name="movie1.properties.name"
+            :img="movie1.properties.img"
             @vote="calculateNewElos(1, 0)"
         ></MovieVote>
         <h1>VS</h1>
         <MovieVote
-            :name="movie2.name"
-            :img="movie2.img"
+            :name="movie2.properties.name"
+            :img="movie2.properties.img"
             @vote="calculateNewElos(0, 1)"
         ></MovieVote>
     </div>

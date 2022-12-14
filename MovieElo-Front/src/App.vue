@@ -81,7 +81,7 @@ nav {
     display: flex;
     gap: 1rem;
 }
-header nav a {
+header nav a{
     background-color: #830f14;
     border-radius: 5px;
     color: #fcf5e8;
@@ -89,7 +89,7 @@ header nav a {
     text-decoration: none;
     transition: all 0.1s ease-out;
 }
-header nav a:hover {
+header nav a:hover{
     transform: scale(1.05);
     color:#fcf5e8
 }
