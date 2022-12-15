@@ -50,8 +50,7 @@ watchEffect(() => {
 }
 #close {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    justify-content: left;
     padding: 0.6rem;
 }
 span.btn {
@@ -63,5 +62,16 @@ span.btn {
 }
 h2 {
     text-align: left;
+}
+
+@media screen and (max-width: 767px) {
+    #close {
+        padding: 0;
+        justify-content: right;
+    }
+    #close span {
+        padding: 0.6rem;
+        font-size: xx-large;
+    }
 }
 </style>

@@ -1,6 +1,6 @@
 <script setup>
 import { movies } from "../stores/movies";
-import { computed, ref } from "vue";
+import { computed, ref, watchEffect } from "vue";
 import TheMovieModal from "./modal/TheMovieModal.vue";
 
 const ranking = computed(() => {
@@ -11,9 +11,18 @@ const ranking = computed(() => {
     })
 })
 
+
 let showModal = ref(false)
 let movieId = ref(null)
 let movieRank = ref(null)
+
+watchEffect(() => {
+    if(showModal.value){
+        document.getElementById('app').style.overflow = 'hidden';
+    }else{
+        document.getElementById('app').style.overflow = 'scroll';
+    }
+})
 
 function openModal(id, rank) {
     movieId.value = id
