@@ -33,12 +33,12 @@ function closeModal() {
                 class="modal-background"
                 v-if="showModal"
                 @click="closeModal()"
-                ></div>
-            </transition>
-            
-            <transition name="pop" appear>
-                <div class="modal-overlay" role="dialog" v-show="showModal">
-                    <TheMovieModal
+            ></div>
+        </transition>
+
+        <transition name="pop" appear>
+            <div class="modal-overlay" role="dialog" v-show="showModal">
+                <TheMovieModal
                     @close="closeModal()"
                     :rank="movieRank"
                     :movieId="movieId"
@@ -48,9 +48,9 @@ function closeModal() {
 
         <transition name="pop" appear> </transition>
     </div>
-    <div class="ranking">
+    <div>
         <h2>The ranking</h2>
-        <ul id="example-1">
+        <ul class="ranking">
             <li id="first-row">
                 <span class="rank">#</span>
                 <span class="name">Film</span>
@@ -70,7 +70,7 @@ function closeModal() {
 </template>
 
 <style scoped>
-ul {
+.ranking {
     list-style-type: none;
     padding: 0;
     width: 60%;
@@ -89,9 +89,6 @@ li.movies:hover {
 }
 #first-row {
     font-weight: bold;
-}
-.ranking {
-    overflow: hidden;
 }
 .rank {
     flex-basis: 35px;
@@ -139,6 +136,20 @@ li.movies:hover {
 .pop-enter-from,
 .pop-leave-to {
     transform: translateX(100%);
+}
+
+@media screen and (max-width: 767px) {
+    .ranking {
+        width: 80%;
+    }
+
+    .pop-enter-from,
+    .pop-leave-to {
+        transform: translateY(100%);
+    }
+    .modal-overlay {
+        width: 100%;
+    }
 }
 </style>
     

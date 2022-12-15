@@ -10,8 +10,7 @@ const emit = defineEmits(['click', 'vote'])
 <template>
     <div class="card" @click="$emit('vote')">
         <div class="card-body">
-            <img v-if="props.name == 'loading...'" src="../assets/loading.gif" class="card-img" />
-            <img v-if="props.name != 'loading...'" :src="props.img" class="card-img" />
+            <img :src="props.img" class="card-img" />
             <div class="name">
                 <h3>{{ name }}</h3>
             </div>
@@ -57,5 +56,17 @@ h3 {
     font-size: medium;
     font-weight: 400;
     margin: 0 1em 0 1em;
+}
+
+@media screen and (max-width: 767px) {
+    .card {
+        width: 80%;
+        height: 200px;
+    }
+
+    .card-img {
+        height: 70%;
+        object-fit: cover;
+    }
 }
 </style>

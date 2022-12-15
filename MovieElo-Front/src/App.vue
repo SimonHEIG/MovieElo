@@ -72,6 +72,7 @@ body,
 #app {
     margin: 0;
     height: 100vh;
+    
 }
 
 #app {
@@ -168,6 +169,13 @@ main {
     }
     100% {
         transform: rotate(360deg);
+    }
+}
+
+
+@media screen and (max-width: 767px) {
+    header{
+        padding: 0 10% 0 4%
     }
 }
 </style>

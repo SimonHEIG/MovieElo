@@ -1,17 +1,29 @@
 <script setup>
 import MovieVote from './MovieVote.vue'
 import { movies } from '../stores/movies';
-import { ref, watchEffect } from 'vue';
+import { computed, ref, watchEffect } from 'vue';
 import { usePatch } from '../composable/fetch.js'
 
-let movie1 = ref()
-let movie2 = ref()
+let movie1 = ref(null)
+let movie2 = ref(null)
+let viewportWidth = ref(window.innerWidth)
+addEventListener("resize", (event) => { viewportWidth.value = window.innerWidth });
 
-watchEffect(() => {
-    if (movies.value[0].properties.name != 'loading') {
-        newDuel()
+let movieImages = computed(() => {
+    if (viewportWidth.value > 767) {
+        return {
+            1: movie1.value.properties.img,
+            2: movie2.value.properties.img,
+        }
+    } else {
+        return {
+            1: movie1.value.properties.cover,
+            2: movie2.value.properties.cover,
+        }
     }
 })
+
+// watchEffect(() => { console.log(viewportWidth.value) })
 
 function newDuel() {
     let shuffled = [...movies.value].sort(() => 0.5 - Math.random())
@@ -54,13 +66,13 @@ newDuel()
     <div class="cards">
         <MovieVote
             :name="movie1.properties.name"
-            :img="movie1.properties.img"
+            :img="movieImages[1]"
             @vote="calculateNewElos(1, 0)"
         ></MovieVote>
         <h1>VS</h1>
         <MovieVote
             :name="movie2.properties.name"
-            :img="movie2.properties.img"
+            :img="movieImages[2]"
             @vote="calculateNewElos(0, 1)"
         ></MovieVote>
     </div>
@@ -73,5 +85,13 @@ newDuel()
     flex-flow: row wrap;
     align-items: center;
     gap: 40px;
+    flex-direction: row;
+}
+@media screen and (max-width: 767px) {
+    .cards {
+        /* background-color: tomato; */
+        flex-direction: column;
+        gap: 5px;
+    }
 }
 </style>
