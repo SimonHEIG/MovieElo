@@ -114,6 +114,7 @@ header nav a {
 }
 header nav a:hover {
     transform: scale(1.05);
+    color:#fcf5e8
 }
 a {
     color: #830f14;
@@ -147,10 +148,10 @@ main {
     width: 32px;
     height: 32px;
     margin: 8px;
-    border: 4px solid #5f5b55;
+    border: 4px solid #8a847c;
     border-radius: 50%;
     animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-    border-color: #5f5b55 transparent transparent transparent;
+    border-color: #8a847c transparent transparent transparent;
 }
 .lds-ring div:nth-child(1) {
     animation-delay: -0.45s;

@@ -1,6 +1,7 @@
 <script setup>
 const props = defineProps({
-    gradesData: Object
+    gradesData: Object,
+    rank: Number
 })
 
 </script>
@@ -8,7 +9,7 @@ const props = defineProps({
 <template>
     <div class="grades">
         <div class="grade">
-            <span class="grade-value">#{{props.gradesData.elo}}</span>
+            <span class="grade-value">#{{props.rank}}</span>
             <span class="grade-label">Movie Elo Rank</span>
         </div>
         <div class="grade">

@@ -13,10 +13,15 @@ const ranking = computed(() => {
 
 let showModal = ref(false)
 let movieId = ref(null)
+let movieRank = ref(null)
 
-function openModal(id) {
+function openModal(id, rank) {
     movieId.value = id
+    movieRank.value = rank
     showModal.value = true
+}
+function closeModal() {
+    showModal.value = false
 }
 
 </script>
@@ -27,15 +32,15 @@ function openModal(id) {
             <div
                 class="modal-background"
                 v-if="showModal"
-                @click="showModal = false"
-                :movieId="movieId"
-            ></div>
-        </transition>
-
-        <transition name="pop" appear>
-            <div class="modal-overlay" role="dialog" v-show="showModal">
-                <TheMovieModal
-                    @close="showModal = false"
+                @click="closeModal()"
+                ></div>
+            </transition>
+            
+            <transition name="pop" appear>
+                <div class="modal-overlay" role="dialog" v-show="showModal">
+                    <TheMovieModal
+                    @close="closeModal()"
+                    :rank="movieRank"
                     :movieId="movieId"
                 ></TheMovieModal>
             </div>
@@ -54,7 +59,7 @@ function openModal(id) {
             <li
                 v-for="(movie, rank) of ranking"
                 class="movies"
-                @click="openModal(movie.properties.id)"
+                @click="openModal(movie.properties.id, rank + 1)"
             >
                 <span class="rank">{{ rank + 1 }}.</span>
                 <span class="name">{{ movie.properties.name }}</span>
@@ -85,6 +90,9 @@ li.movies:hover {
 #first-row {
     font-weight: bold;
 }
+.ranking {
+    overflow: hidden;
+}
 .rank {
     flex-basis: 35px;
 }
@@ -110,6 +118,7 @@ li.movies:hover {
     padding: 0;
     background-color: #fcf5e8;
     z-index: 999;
+    overflow: auto;
 }
 
 .fade-enter-active,
@@ -124,7 +133,7 @@ li.movies:hover {
 
 .pop-enter-active,
 .pop-leave-active {
-    transition: transform 0.3s ease
+    transition: transform 0.3s ease;
 }
 
 .pop-enter-from,
