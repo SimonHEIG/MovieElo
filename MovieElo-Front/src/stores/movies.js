@@ -2,51 +2,52 @@ import { ref } from 'vue'
 
 const apiURL = import.meta.env.VITE_MOVIE_ELO_API_URL
 
-export const movies = ref([
-  {
-    properties: {
-      name: 'loading...',
-      cast: 'Acteur 1, Acteur 2, Acteur 3, Acteur 4, ...',
-      director: 'Réalisateur',
-      year: 'Année',
-      genres: 'Genre 1, Genre 2, Genre 3 ...',
-      cover: ''
-    },
-    grades: {
-      acting: '0',
-      perso: 0,
-      elo: 0,
-      feeling: 0,
-      story: 0,
-      music: 0,
-      note: 0,
-      directing: 0,
-      tmdb: 0,
-      comment: 'commentaire'
-    }
-  },
-  {
-    properties: {
-      name: 'loading...',
-      cast: 'Acteur 1, Acteur 2, Acteur 3, Acteur 4, ...',
-      director: 'Réalisateur',
-      year: 'Année',
-      genres: 'Genre 1, Genre 2, Genre 3 ...',
-      cover: ''
-    },
-    grades: {
-      acting: '0',
-      perso: 0,
-      elo: 0,
-      feeling: 0,
-      story: 0,
-      music: 0,
-      note: 0,
-      directing: 0,
-      tmdb: 0,
-      comment: 'commentaire'
-    }
-  }])
+export const movies = ref(null)
+// export const movies = ref([
+//   {
+//     properties: {
+//       name: 'loading...',
+//       cast: 'Acteur 1, Acteur 2, Acteur 3, Acteur 4, ...',
+//       director: 'Réalisateur',
+//       year: 'Année',
+//       genres: 'Genre 1, Genre 2, Genre 3 ...',
+//       cover: ''
+//     },
+//     grades: {
+//       acting: '0',
+//       perso: 0,
+//       elo: 0,
+//       feeling: 0,
+//       story: 0,
+//       music: 0,
+//       note: 0,
+//       directing: 0,
+//       tmdb: 0,
+//       comment: 'commentaire'
+//     }
+//   },
+//   {
+//     properties: {
+//       name: 'loading...',
+//       cast: 'Acteur 1, Acteur 2, Acteur 3, Acteur 4, ...',
+//       director: 'Réalisateur',
+//       year: 'Année',
+//       genres: 'Genre 1, Genre 2, Genre 3 ...',
+//       cover: ''
+//     },
+//     grades: {
+//       acting: '0',
+//       perso: 0,
+//       elo: 0,
+//       feeling: 0,
+//       story: 0,
+//       music: 0,
+//       note: 0,
+//       directing: 0,
+//       tmdb: 0,
+//       comment: 'commentaire'
+//     }
+//   }])
 
 async function getMoviesFromAPI() {
   let moviesAPI = [];

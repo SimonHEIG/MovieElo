@@ -3,7 +3,15 @@ import TheVote from './components/TheVote.vue'
 import { movies } from './stores/movies';
 import TheRanking from './components/TheRanking.vue';
 import { ref } from '@vue/reactivity';
-import { computed } from '@vue/runtime-core';
+import { computed, watchEffect } from '@vue/runtime-core';
+
+let loading = computed(() => {
+    if(movies.value == null){
+        return true
+    }else{
+        return false
+    }
+})
 
 const routes = {
     '/Vote': TheVote,
@@ -39,7 +47,15 @@ const currentView = computed(() => {
     </header>
 
     <main>
-        <component :is="currentView" />
+        <div class="loader" v-if="loading">
+            <div class="lds-ring">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+        <component v-else :is="currentView" />
     </main>
 </template>
 
@@ -52,8 +68,15 @@ html {
     color: #1d0204;
 }
 
-body {
+body,
+#app {
     margin: 0;
+    height: 100vh;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
 }
 
 header {
@@ -81,7 +104,7 @@ nav {
     display: flex;
     gap: 1rem;
 }
-header nav a{
+header nav a {
     background-color: #830f14;
     border-radius: 5px;
     color: #fcf5e8;
@@ -89,14 +112,61 @@ header nav a{
     text-decoration: none;
     transition: all 0.1s ease-out;
 }
-header nav a:hover{
+header nav a:hover {
     transform: scale(1.05);
-    color:#fcf5e8
 }
 a {
     color: #830f14;
 }
 a:hover {
     color: #faaa1e;
+}
+
+main {
+    flex-grow: 1;
+}
+
+/* Loader */
+.loader {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lds-ring {
+    display: inline-block;
+    position: relative;
+    width: 40px;
+    height: 40px;
+}
+.lds-ring div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    margin: 8px;
+    border: 4px solid #5f5b55;
+    border-radius: 50%;
+    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: #5f5b55 transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+    animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+    animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+    animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 </style>
