@@ -1,6 +1,6 @@
 import * as dotenv from 'dotenv'
 dotenv.config()
-import express from "express"
+import express, { response } from "express"
 import axios from 'axios'
 import cors from 'cors'
 import bp from 'body-parser'
@@ -10,17 +10,29 @@ const app = express()
 const database_id = process.env.NOTION_DB_ID
 const secret_key = process.env.NOTION_TOKEN
 
+const errorHandler = (error, request, response, next) => {
+    // Error handling middleware functionality
+    console.log(`error ${error.message}`) // log the error
+    const status = error.status || 400
+    // send back an easily understandable error message to the caller
+    response.status(status).send(error.message)
+}
+
 app.use(bp.json())
 app.use(bp.urlencoded({ extended: true }))
-
 app.use('/', function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", process.env.CORS_DOMAIN); // update to match the domain you will make the request from
+    res.header("Access-Control-Allow-Origin", process.env.CORS_DOMAIN);
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
+app.use(cors({
+    origin: [process.env.CORS_DOMAIN]
+}));
+app.use(express.json())
+app.use(errorHandler)
 
 // Get all watched movies 
-app.get('/', async (req, res) => {
+app.get('/', async (req, res, next) => {
     const data = {
         page_size: 100,
         filter: {
@@ -41,18 +53,25 @@ app.get('/', async (req, res) => {
         'Notion-Version': '2022-02-22',
     }
 
-    const resp = await axios({
+    const options = {
         accept: 'application/json',
         'content-type': 'application/json',
         method: 'POST',
         url: 'https://api.notion.com/v1/databases/' + database_id + "/query",
         headers,
         data
-    });
-    return res.json(resp.data);
+    }
+
+    axios.request(options)
+        .then(function (response) {
+            return res.json(response.data)
+        })
+        .catch(function (error) {
+            next(error)
+        });
 })
 
-app.patch('/', async (req, res) => {
+app.patch('/', async (req, res, next) => {
     const options = {
         method: 'PATCH',
         url: `https://api.notion.com/v1/pages/${req.body.id}`,
@@ -72,19 +91,12 @@ app.patch('/', async (req, res) => {
     }
     axios.request(options)
         .then(function (response) {
-            console.log(response.data.properties.Elo.number);
-            return res.json({'newElo' : response.data.properties.Elo.number});
+            return res.json({ 'newElo': response.data.properties.Elo.number });
         })
         .catch(function (error) {
-            console.error(error);
+            next(error)
         });
+
 })
-
-app.use(cors({
-    origin: [process.env.CORS_DOMAIN]
-}));
-
-app.use(express.json())
-
 
 export default app;
