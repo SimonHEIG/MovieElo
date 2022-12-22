@@ -55,7 +55,6 @@ app.get('/', async (req, res, next) => {
 
     const options = {
         accept: 'application/json',
-        'content-type': 'application/json',
         method: 'POST',
         url: 'https://api.notion.com/v1/databases/' + database_id + "/query",
         headers,
