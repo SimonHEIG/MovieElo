@@ -28,8 +28,7 @@ MovieElo uses the Notion API to fetch user's movies infos such as :
 - An IDE like VSCode
 - A working Notion environnement. See the [Notion section](#Notion)
 
-# Foo
-### Dev
+## Dev environment
 The project is divided in two distinct apps : The express.js backend to fetch data from Notion API and the Vue.js frontend to display the user interface. In order for the projet to work, you'll need to setup and launch both of the apps in two distinct terminals.
 
 First, create `.env` files using the `.env.example` files present in each app folder and fill them with your own informations. To know more about the Notion Token, head to the [Notion section](#Notion).
