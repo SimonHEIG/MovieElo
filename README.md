@@ -9,7 +9,7 @@ In the context of ranking movies, the [Elo rating system](https://en.wikipedia.o
 
 **Example** : Let's say that there is a match confronting : *Forrest Gump - 1500 Elo* **vs** *The Man from Toronto - 500 Elo*
 - If *Forrest Gump* wins : *Forrest Gump* will **lose** *0.1 points* & *The Man from Toronto* will **win** *0.1*
-- If *The Man from Toronto* wins : *Forrest Gump* will **win** *39.1 points* & *The Man from Toronto* will **lose** *39.1 points*
+- If *The Man from Toronto* wins : *Forrest Gump* will **lose** *39.1 points* & *The Man from Toronto* will **win** *39.1 points*
 
 Whereas when 2 movies with very close score confronts, very few points will be won and lost.
 
