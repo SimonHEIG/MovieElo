@@ -127,6 +127,7 @@ li.movies:hover {
     overflow: auto;
 }
 
+/* ANIMATION */
 .fade-enter-active,
 .fade-leave-active {
     transition: opacity 0.4s linear;
@@ -139,7 +140,7 @@ li.movies:hover {
 
 .pop-enter-active,
 .pop-leave-active {
-    transition: transform 0.3s ease;
+    transition: transform 0.3s  ease;
 }
 
 .pop-enter-from,

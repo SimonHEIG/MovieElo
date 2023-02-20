@@ -7,7 +7,8 @@ import { usePatch } from '../composable/fetch.js'
 let movie1 = ref(null)
 let movie2 = ref(null)
 let viewportWidth = ref(window.innerWidth)
-addEventListener("resize", (event) => { viewportWidth.value = window.innerWidth });
+addEventListener("resize", (event) => { viewportWidth.value = window.innerWidth })
+let lastClick = new Date();
 
 let movieImages = computed(() => {
     if (viewportWidth.value > 767) {
@@ -23,8 +24,6 @@ let movieImages = computed(() => {
     }
 })
 
-// watchEffect(() => { console.log(viewportWidth.value) })
-
 function newDuel() {
     let shuffled = [...movies.value].sort(() => 0.5 - Math.random())
     shuffled = shuffled.slice(0, 2)
@@ -35,11 +34,20 @@ function newDuel() {
 
 
 async function calculateNewElos(score1, score2) {
+
+    // Anti spam click
+    const currentClick = new Date()
+    const diff = (currentClick.getTime() - lastClick.getTime()) / 1000
+    if(diff < 0.5) return
+    lastClick = currentClick
+
+    // Calcul des nouveaux elos
     const movie1_expected_score = 1 / (1 + Math.pow(10, ((movie2.value.grades.elo - movie1.value.grades.elo) / 400)))
     const movie2_expected_score = 1 / (1 + Math.pow(10, ((movie1.value.grades.elo - movie2.value.grades.elo) / 400)))
     movie1.value.grades.elo += 20 * (score1 - movie1_expected_score)
     movie2.value.grades.elo += 20 * (score2 - movie2_expected_score)
 
+    // Ajout des elos dans la base
     usePatch({
         url: import.meta.env.VITE_MOVIE_ELO_API_URL,
         data: {
