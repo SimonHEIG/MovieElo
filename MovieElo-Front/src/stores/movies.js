@@ -54,7 +54,6 @@ async function getMoviesFromAPI() {
 
   let res = await fetch(`${apiURL}`)
   let data = await res.json()
-  // console.log(data);
 
   moviesAPI = data.results.map(movie => {
 
@@ -78,6 +77,11 @@ async function getMoviesFromAPI() {
       }
     }
 
+    let cover = ''
+    if(movie.cover){
+        cover = movie.cover.external.url
+    }
+
     let movieData = {
       properties: {
         id: movie.id,
@@ -86,7 +90,7 @@ async function getMoviesFromAPI() {
         director: movie.properties.Director.rich_text[0].plain_text,
         year: movie.properties.Year.rich_text[0].plain_text,
         genres: genres,
-        cover: movie.cover.external.url,
+        cover: cover,
         img: movie.properties['IMG'].files[0].name.replace('/original/', '/w342/'),
       },
       grades: {
