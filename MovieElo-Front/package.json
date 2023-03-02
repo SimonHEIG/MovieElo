@@ -9,7 +9,7 @@
   "dependencies": {
     "@notionhq/client": "^1.0.4",
     "dotenv": "^16.0.3",
-    "vue": "^3.2.45"
+    "vue": "^3.2.47"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^3.0.3",
