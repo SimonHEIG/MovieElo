@@ -7,7 +7,7 @@
     "start": "node ./bin/start"
   },
   "dependencies": {
-    "axios": "^1.2.3",
+    "axios": "^1.4.0",
     "body-parser": "^1.20.1",
     "cors": "^2.8.5",
     "debug": "^4.3.4",
